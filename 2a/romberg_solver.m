@@ -1,0 +1,1 @@
+format long;n = [8, 64, 128];f = @(x) e^x;g = @(x) cos(x);for i = 1:length(eps)  tic;  res = romberg(f, 0, 1 , n(i)) * romberg(g, 0, pi/2, n(1))  toc;endfor
