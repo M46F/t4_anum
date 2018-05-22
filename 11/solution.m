@@ -11,14 +11,14 @@ errors = [];
 for temp = lin_space_1
  real_res = sin(pi*temp);
  polim_res = p(temp);
- error = abs(real_res - polim_res) / real_res;
+ error = abs(real_res - polim_res);
+
  errors = [errors error];
- 
  real = [real real_res];
  polim = [polim polim_res];
 end
 [max_e, index_error] = max(errors);
-avg_e = mean(errors);
+galat = norm(errors);
 
 fprintf("from -1 to 1\n");
 fprintf("max error: %d\n", max_e);
@@ -26,7 +26,7 @@ fprintf("max error index: %d\n", index_error);
 fprintf("max error happened when t= %d\n", lin_space_1(index_error));
 fprintf("max error sin(pi*t)=: %d\n", real(index_error));
 fprintf("max error p(t)=: %d\n", polim(index_error));
-fprintf("avg error: %d\n", avg_e);
+fprintf("galat: %d\n", galat);
 
 hold on;
 plot(t,y,'ob');
@@ -45,14 +45,14 @@ errors = [];
 for temp = lin_space_2
  real_res = sin(pi*temp);
  polim_res = p(temp);
- error = abs(real_res - polim_res) / real_res;
+ error = abs(real_res - polim_res);
  errors = [errors error];
  
  real = [real real_res];
  polim = [polim polim_res];
 end
 [max_e, index_error] = max(errors);
-avg_e = mean(errors);
+galat = norm(errors);
 
 fprintf("from -2 to 2\n");
 fprintf("max error: %d\n", max_e);
@@ -60,7 +60,7 @@ fprintf("max error index: %d\n", index_error);
 fprintf("max error happened when t=: %d\n", lin_space_2(index_error));
 fprintf("max error sin(pi*t)=: %d\n", real(index_error));
 fprintf("max error p(t)=: %d\n", polim(index_error));
-fprintf("avg error: %d\n", avg_e);
+fprintf("galat: %d\n", galat);
 
 hold on;
 plot(t,y,'ob');
