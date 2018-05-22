@@ -1,10 +1,13 @@
-function error = generate_image(n_point)
+function [err, elapsed] = generate_image(n_point)
 	first = -4;
 	last = 4;
 	xx = linspace(first, last, n_point);
-	[e, res] = cubic_spline_hermit(xx);
+	tic;
+	res = cubic_spline_hermit(xx);
+	elapsed = toc;
 	fig = figure();
 	hold on;
+	err = [];
 	spline_result = [];
 	actual_result = [];
 	xxx_all = [];
@@ -17,15 +20,19 @@ function error = generate_image(n_point)
 		c = res(i,3);
 		d = res(i,4);
 		for j=1:xxx_len
-			spline_result = [spline_result; a*xxx(j)**3 + b*xxx(j)**2 + c*xxx(j) + d];
-			actual_result = [actual_result; runge(xxx(j))];
+			spline_y = a*xxx(j)**3 + b*xxx(j)**2 + c*xxx(j) + d;
+			actual_y = runge(xxx(j));
+			err = [err, abs( (actual_y - spline_y) / actual_y )];
+			spline_result = [spline_result; spline_y];
+			actual_result = [actual_result; actual_y];
 		end
 	end
 	plot(xxx_all, actual_result, 'r-');
 	plot(xxx_all, spline_result, 'b-');
-	legend('Interpolated', 'Runge Function');
+	legend('Runge', 'Cubic Spline');
 	file = strcat(strcat('runge',num2str(n_point)),'.png');
 	print(file);
 	saveas(fig,file);
 	hold off;
+	err = max(err);
 end
