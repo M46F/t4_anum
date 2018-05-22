@@ -1,6 +1,7 @@
 function res = adaptive_simpson(f, a, b, tol)
   total = simpson_rule(f,a,b);
   res = adaptive_simpson_helper(f, a, b, tol, total);
+  res(2) += 1;
 endfunction
 
 function res = adaptive_simpson_helper(f, a, b, tol, total)
@@ -9,7 +10,7 @@ function res = adaptive_simpson_helper(f, a, b, tol, total)
   right = simpson_rule(f, c, b);
   
   if abs(left + right - total) <= 15 * tol
-    res = left + right + (left + right - total)/15;
+    res = [left + right + (left + right - total)/15, 2];
   else
     res = adaptive_simpson_helper(f, a, c, tol/2, left) + adaptive_simpson_helper(f, c, b, tol/2, right);
   endif
