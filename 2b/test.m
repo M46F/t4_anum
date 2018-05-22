@@ -9,6 +9,8 @@ for i = 1:length(eps)
   disp(eps(i));
   
   tic;
-  res = adaptive_simpson(f, 0, 1 ,eps(1)) * adaptive_simpson(g, 0, pi/2, eps(1))
+  l1 = adaptive_simpson(f, 0, 1 ,eps(i))
+  l2 = adaptive_simpson(g, 0, pi/2, eps(i))
+  res = l1(1) * l2(1)
   toc;
 endfor
