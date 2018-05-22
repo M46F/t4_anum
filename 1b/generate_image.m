@@ -1,7 +1,9 @@
-function [err, elapsed] = generate_image(n_point)
+function [err, elapsed] = generate_image(h)
 	first = -4;
 	last = 4;
-	xx = linspace(first, last, n_point);
+	% Asumsi input normal
+	xx = first:h:last;
+	n_point = length(xx);
 	tic;
 	res = cubic_spline_hermit(xx);
 	elapsed = toc;
@@ -30,7 +32,8 @@ function [err, elapsed] = generate_image(n_point)
 	plot(xxx_all, actual_result, 'r-');
 	plot(xxx_all, spline_result, 'b-');
 	legend('Runge', 'Cubic Spline');
-	file = strcat(strcat('runge',num2str(n_point)),'.png');
+	h
+	file = strcat(strcat('runge_h',num2str(h)),'.png');
 	print(file);
 	saveas(fig,file);
 	hold off;
